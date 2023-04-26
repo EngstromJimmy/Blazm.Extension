@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Include href="KnownImageIds.vsct"/>
+  <Include href="VSGlobals.vsct"/>
+ 	
+	<Commands package="BlazmExtension">
+		<Groups>
+			<Group guid="BlazmExtension" id="MyMenuGroup" priority="0x0600">
+			<!--<Parent guid="VSMainMenu" id="Tools"/>-->
+			<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
+			</Group>
+			<Group guid="BlazmExtension" id="RazorFileMenu" priority="0x0600">
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN"/>
+			</Group>
+		</Groups>
+
+		<Bitmaps>
+			<Bitmap guid="CssIcons" href="Resources\StyleSheet.png" />
+			<Bitmap guid="JsIcons" href="Resources\JSScript.png" />
+			<Bitmap guid="RazorIcons" href="Resources\CSRazorFile.png" />
+		</Bitmaps>
+		<!--This section defines the elements the user can interact with, like a menu command or a button
+			or combo box in a toolbar. -->
+		<Buttons>
+			<Button guid="BlazmExtension" id="MoveNamespace" priority="0x0100" type="Button">
+				<Parent guid="BlazmExtension" id="RazorFileMenu" />
+				<Icon guid="RazorIcons" id="razorIcon" />
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Move namespace(s) to _Import</ButtonText>
+					<LocCanonicalName>.BlazmExtension.MoveNamespace</LocCanonicalName>
+				</Strings>
+			</Button>
+			
+			<Button guid="BlazmExtension" id="CreateIsolatedCss" priority="0x0100" type="Button">
+				<Parent guid="BlazmExtension" id="MyMenuGroup" />
+				<Icon guid="CssIcons" id="cssIcon" />
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Create Isolated CSS</ButtonText>
+					<LocCanonicalName>.BlazmExtension.CreateIsolatedCss</LocCanonicalName>
+				</Strings>
+			</Button>
+			<Button guid="BlazmExtension" id="CreateIsolatedJavaScript" priority="0x0200" type="Button">
+				<Parent guid="BlazmExtension" id="MyMenuGroup" />
+				<Icon guid="JsIcons" id="jsIcon" />
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Create Isolated JavaScript</ButtonText>
+					<LocCanonicalName>.BlazmExtension.CreateIsolatedJavaScript</LocCanonicalName>
+				</Strings>
+			</Button>
+		</Buttons>
+	</Commands>
+
+	<Symbols>
+
+
+
+		
+		<GuidSymbol name="BlazmExtension" value="{e12b1962-2ac4-416a-af19-2c6b8731922d}">
+			<IDSymbol name="MyMenuGroup" value="0x0001" />
+			<IDSymbol name="RazorFileMenu" value="0x0002" />
+			<IDSymbol name="CreateIsolatedCss" value="0x0100" />
+			<IDSymbol name="CreateIsolatedJavaScript" value="0x0200" />
+			<IDSymbol name="MoveNamespace" value="0x0300" />
+		</GuidSymbol>
+		<GuidSymbol name="RazorContextGuid" value="{ba1aa6e4-68f5-4a4f-97c0-cbf91710430e}"/>
+		<GuidSymbol name="CssIcons" value="{7d860ae9-adfa-4fda-b13b-083a6dd309b1}">
+			<IDSymbol name="cssIcon" value="1" />
+		</GuidSymbol>
+		<GuidSymbol name="JsIcons" value="{7d860ae9-adfa-4fda-b13b-083a6dd309b0}">
+			<IDSymbol name="jsIcon" value="1" />
+		</GuidSymbol>
+		<GuidSymbol name="RazorIcons" value="{7d860ae9-adfa-4fda-b13b-083a6dd309b2}">
+			<IDSymbol name="razorIcon" value="1" />
+		</GuidSymbol>
+	</Symbols>
+	
+	
+
+	<VisibilityConstraints>
+		<VisibilityConstraints>
+			<VisibilityItem guid="BlazmExtension" id="CreateIsolatedCss" context="RazorContextGuid"/>
+			<VisibilityItem guid="BlazmExtension" id="CreateIsolatedJavaScript" context="RazorContextGuid"/>
+			<VisibilityItem guid="BlazmExtension" id="MoveNamespace" context="RazorContextGuid"/>
+		</VisibilityConstraints>
+	</VisibilityConstraints>
+	
+</CommandTable>
+
