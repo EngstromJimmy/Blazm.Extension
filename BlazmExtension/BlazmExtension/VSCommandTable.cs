@@ -18,6 +18,9 @@ namespace BlazmExtension
         public const string RazorContextGuidString = "ba1aa6e4-68f5-4a4f-97c0-cbf91710430e";
         public static Guid RazorContextGuid = new Guid(RazorContextGuidString);
 
+        public const string RazorCsContextGuidString = "8f08cd3a-1f0b-4114-8a32-b148e8505468";
+        public static Guid RazorCsContextGuid = new Guid(RazorCsContextGuidString);
+
         public const string CssIconsString = "7d860ae9-adfa-4fda-b13b-083a6dd309b1";
         public static Guid CssIcons = new Guid(CssIconsString);
 
@@ -37,6 +40,8 @@ namespace BlazmExtension
         public const int CreateIsolatedCss = 0x0100;
         public const int CreateIsolatedJavaScript = 0x0200;
         public const int MoveNamespace = 0x0300;
+        public const int MoveCodebehind = 0x0400;
+        public const int ExtractToComponent = 0x0500;
         public const int cssIcon = 0x0001;
         public const int jsIcon = 0x0001;
         public const int razorIcon = 0x0001;

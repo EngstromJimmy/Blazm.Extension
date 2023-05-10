@@ -12,6 +12,12 @@ namespace BlazmExtension
     [Command(PackageIds.CreateIsolatedJavaScript)]
     internal sealed class CreateIsolatedJavaScriptCommand : BaseCommand<CreateIsolatedJavaScriptCommand>
     {
+
+        protected override Task InitializeCompletedAsync()
+        {
+            Command.Supported = false;
+            return base.InitializeCompletedAsync();
+        }
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
             var dte = await Package.GetServiceAsync(typeof(DTE)) as DTE2;

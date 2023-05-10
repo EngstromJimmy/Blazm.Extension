@@ -34,8 +34,29 @@
 					<LocCanonicalName>.BlazmExtension.MoveNamespace</LocCanonicalName>
 				</Strings>
 			</Button>
+
+			<Button guid="BlazmExtension" id="ExtractToComponent" priority="0x0100" type="Button">
+				<Parent guid="BlazmExtension" id="RazorFileMenu" />
+				<Icon guid="RazorIcons" id="razorIcon" />
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Extract to component</ButtonText>
+					<LocCanonicalName>.BlazmExtension.ExtractToComponent</LocCanonicalName>
+				</Strings>
+			</Button>
+
 			
-			<Button guid="BlazmExtension" id="CreateIsolatedCss" priority="0x0100" type="Button">
+			<Button guid="BlazmExtension" id="MoveCodebehind" priority="0x0100" type="Button">
+				<Parent guid="BlazmExtension" id="MyMenuGroup" />
+				<Icon guid="RazorIcons" id="razorIcon" />
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Move code-behind to .razor</ButtonText>
+					<LocCanonicalName>.BlazmExtension.MoveCodehind</LocCanonicalName>
+				</Strings>
+			</Button>
+			
+			<Button guid="BlazmExtension" id="CreateIsolatedCss" priority="0x0200" type="Button">
 				<Parent guid="BlazmExtension" id="MyMenuGroup" />
 				<Icon guid="CssIcons" id="cssIcon" />
 				<CommandFlag>DynamicVisibility</CommandFlag>
@@ -44,7 +65,7 @@
 					<LocCanonicalName>.BlazmExtension.CreateIsolatedCss</LocCanonicalName>
 				</Strings>
 			</Button>
-			<Button guid="BlazmExtension" id="CreateIsolatedJavaScript" priority="0x0200" type="Button">
+			<Button guid="BlazmExtension" id="CreateIsolatedJavaScript" priority="0x0300" type="Button">
 				<Parent guid="BlazmExtension" id="MyMenuGroup" />
 				<Icon guid="JsIcons" id="jsIcon" />
 				<CommandFlag>DynamicVisibility</CommandFlag>
@@ -57,18 +78,17 @@
 	</Commands>
 
 	<Symbols>
-
-
-
-		
 		<GuidSymbol name="BlazmExtension" value="{e12b1962-2ac4-416a-af19-2c6b8731922d}">
 			<IDSymbol name="MyMenuGroup" value="0x0001" />
 			<IDSymbol name="RazorFileMenu" value="0x0002" />
 			<IDSymbol name="CreateIsolatedCss" value="0x0100" />
 			<IDSymbol name="CreateIsolatedJavaScript" value="0x0200" />
 			<IDSymbol name="MoveNamespace" value="0x0300" />
+			<IDSymbol name="MoveCodebehind" value="0x0400" />
+			<IDSymbol name="ExtractToComponent" value="0x0500" />
 		</GuidSymbol>
 		<GuidSymbol name="RazorContextGuid" value="{ba1aa6e4-68f5-4a4f-97c0-cbf91710430e}"/>
+		<GuidSymbol name="RazorCsContextGuid" value="{8f08cd3a-1f0b-4114-8a32-b148e8505468}"/>
 		<GuidSymbol name="CssIcons" value="{7d860ae9-adfa-4fda-b13b-083a6dd309b1}">
 			<IDSymbol name="cssIcon" value="1" />
 		</GuidSymbol>
@@ -87,8 +107,11 @@
 			<VisibilityItem guid="BlazmExtension" id="CreateIsolatedCss" context="RazorContextGuid"/>
 			<VisibilityItem guid="BlazmExtension" id="CreateIsolatedJavaScript" context="RazorContextGuid"/>
 			<VisibilityItem guid="BlazmExtension" id="MoveNamespace" context="RazorContextGuid"/>
+			<VisibilityItem guid="BlazmExtension" id="ExtractToComponent" context="RazorContextGuid"/>
+			<VisibilityItem guid="BlazmExtension" id="MoveCodebehind" context="RazorCsContextGuid"/>
 		</VisibilityConstraints>
 	</VisibilityConstraints>
 	
 </CommandTable>
+
 

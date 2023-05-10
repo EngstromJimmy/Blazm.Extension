@@ -15,6 +15,12 @@ namespace BlazmExtension
     [Command(PackageIds.MoveNamespace)]
     internal sealed class MoveNamespaceCommand : BaseCommand<MoveNamespaceCommand>
     {
+        protected override Task InitializeCompletedAsync()
+        {
+            Command.Supported = false;
+            return base.InitializeCompletedAsync();
+        }
+
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();

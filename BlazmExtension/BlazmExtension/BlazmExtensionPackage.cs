@@ -2,11 +2,13 @@
 global using Microsoft.VisualStudio.Shell;
 global using System;
 global using Task = System.Threading.Tasks.Task;
+using Microsoft.VisualStudio.Shell.Interop;
 using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace BlazmExtension
 {
+    [ProvideAutoLoad(UIContextGuids80.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [InstalledProductRegistration(Vsix.Name, Vsix.Description, Vsix.Version)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
@@ -15,6 +17,11 @@ namespace BlazmExtension
     expression: "DotRazor",
     termNames: new[] { "DotRazor" },
     termValues: new[] { "HierSingleSelectionName:.razor$" })]
+    [ProvideUIContextRule(PackageGuids.RazorCsContextGuidString,
+    name: nameof(PackageGuids.RazorCsContextGuidString),
+    expression: "DotRazorcs",
+    termNames: new[] { "DotRazorcs" },
+    termValues: new[] { "HierSingleSelectionName:.razor.cs$" })]
     [Guid(PackageGuids.BlazmExtensionString)]
     public sealed class BlazmExtensionPackage : ToolkitPackage
     {

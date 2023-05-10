@@ -7,6 +7,12 @@ namespace BlazmExtension
     [Command(PackageIds.CreateIsolatedCss)]
     internal sealed class CreateIsolatedCssCommand : BaseCommand<CreateIsolatedCssCommand>
     {
+        protected override Task InitializeCompletedAsync()
+        {
+            Command.Supported = false;
+            return base.InitializeCompletedAsync();
+        }
+
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
             var dte = await Package.GetServiceAsync(typeof(DTE)) as DTE2;
