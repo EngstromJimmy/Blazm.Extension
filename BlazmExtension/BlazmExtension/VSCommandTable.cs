@@ -29,6 +29,9 @@ namespace BlazmExtension
 
         public const string RazorIconsString = "7d860ae9-adfa-4fda-b13b-083a6dd309b2";
         public static Guid RazorIcons = new Guid(RazorIconsString);
+
+        public const string CsIconsString = "7d860ae9-adfa-4fda-b13b-083a6dd309b3";
+        public static Guid CsIcons = new Guid(CsIconsString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -39,11 +42,17 @@ namespace BlazmExtension
         public const int RazorFileMenu = 0x0002;
         public const int CreateIsolatedCss = 0x0100;
         public const int CreateIsolatedJavaScript = 0x0200;
+        public const int CreateCodebehind = 0x0250;
         public const int MoveNamespace = 0x0300;
         public const int MoveCodebehind = 0x0400;
         public const int ExtractToComponent = 0x0500;
+        public const int RoutingWindow = 0x0600;
+        public const int SwitchToNestedFile = 0x0700;
+        public const int BlazmExtensionMenuGroup = 0x1020;
+        public const int BlazmExtensionMenu = 0x1021;
         public const int cssIcon = 0x0001;
         public const int jsIcon = 0x0001;
         public const int razorIcon = 0x0001;
+        public const int csIcon = 0x0001;
     }
 }
