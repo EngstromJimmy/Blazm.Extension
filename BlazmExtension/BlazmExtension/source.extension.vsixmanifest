@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" ?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="BlazmExtension.a0f59921-9553-46c5-b0cf-4c4921326541" Version="1.1" Language="en-US" Publisher="EngstromJimmy" />
+        <Identity Id="BlazmExtension.a0f59921-9553-46c5-b0cf-4c4921326541" Version="1.3" Language="en-US" Publisher="EngstromJimmy" />
         <DisplayName>BlazmExtension</DisplayName>
         <Description xml:space="preserve">Extension that helps you with common Blazor tasks like creating a Isolated CSS or JavaScript from a context menu item</Description>
         <Icon>Resources\Icon.png</Icon>
