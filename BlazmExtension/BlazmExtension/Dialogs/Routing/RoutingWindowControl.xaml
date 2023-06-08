@@ -81,7 +81,14 @@
                     Grid.Row="1"
                     >
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Content}" Width="*" Header="Route" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Content}" Width="*" Header="Route" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Background" Value="{DynamicResource {x:Static vsShell:VsBrushes.ToolWindowBackgroundKey}}"></Setter>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static vsShell:VsBrushes.GridHeadingTextKey}}"></Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
