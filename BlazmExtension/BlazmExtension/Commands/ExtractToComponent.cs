@@ -42,23 +42,26 @@ internal sealed class ExtractToComponentCommand : BaseCommand<ExtractToComponent
         };
 
         bool? result = dialog.ShowDialog();
-        componentname = (result.HasValue && result.Value) ? dialog.Input : string.Empty;
-
-        if(componentname == string.Empty)
+        if (result.HasValue && result.Value)
         {
-            componentname = "Component";
-        }
-        componentname = Path.GetFileNameWithoutExtension(componentname);
-        componentname = char.ToUpper(componentname[0]) + componentname.Substring(1); // capitalize the first letter
+            componentname = (result.HasValue && result.Value) ? dialog.Input : string.Empty;
 
-        var newcomponentPath = importsPath + "\\" + componentname + ".razor";
-        if(!File.Exists(newcomponentPath))
-        {
-            File.WriteAllText(newcomponentPath, selection.Text);
-        }
-        
-        selection.Text = $"<{componentname} />";
+            if (componentname == string.Empty)
+            {
+                componentname = "Component";
+            }
+            componentname = Path.GetFileNameWithoutExtension(componentname);
+            componentname = char.ToUpper(componentname[0]) + componentname.Substring(1); // capitalize the first letter
 
-        dte.ItemOperations.OpenFile(newcomponentPath);
+            var newcomponentPath = importsPath + "\\" + componentname + ".razor";
+            if (!File.Exists(newcomponentPath))
+            {
+                File.WriteAllText(newcomponentPath, selection.Text);
+            }
+
+            selection.Text = $"<{componentname} />";
+
+            dte.ItemOperations.OpenFile(newcomponentPath);
+        }
     }
 }

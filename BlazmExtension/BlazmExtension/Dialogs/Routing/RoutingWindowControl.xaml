@@ -41,9 +41,10 @@
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static vsShell:VsBrushes.GridHeadingTextKey}}"/>
             </Style>
 
-            <!--<Style TargetType="TextBox">
-                
-            </Style>-->
+            <Style TargetType="TextBox">
+                <Setter Property="Background" Value="{DynamicResource {x:Static vsShell:VsBrushes.ToolWindowBackgroundKey}}"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static vsShell:VsBrushes.ToolWindowTextKey}}"/>
+            </Style>
         </ResourceDictionary>
 
         
