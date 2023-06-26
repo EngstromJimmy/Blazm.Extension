@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" ?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="BlazmExtension.a0f59921-9553-46c5-b0cf-4c4921326541" Version="1.4" Language="en-US" Publisher="EngstromJimmy" />
+        <Identity Id="BlazmExtension.a0f59921-9553-46c5-b0cf-4c4921326541" Version="1.5" Language="en-US" Publisher="EngstromJimmy" />
         <DisplayName>BlazmExtension</DisplayName>
         <Description xml:space="preserve">Extension that helps you with common Blazor tasks like creating a Isolated CSS or JavaScript from a context menu item</Description>
         <Icon>Resources\Icon.png</Icon>
@@ -10,18 +10,18 @@
     <Installation>
 
 
-        <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Community">
-			<ProductArchitecture>arm64</ProductArchitecture>
-		</InstallationTarget>
-		<InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Pro">
-			<ProductArchitecture>arm64</ProductArchitecture>
-		</InstallationTarget>
-		<InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Enterprise">
-			<ProductArchitecture>arm64</ProductArchitecture>
-		</InstallationTarget>
+        <!--<InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Community">
+            <ProductArchitecture>arm64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Pro">
+            <ProductArchitecture>arm64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Enterprise">
+            <ProductArchitecture>arm64</ProductArchitecture>
+        </InstallationTarget>-->
 
 
-        <!--<InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
+        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
             <ProductArchitecture>amd64</ProductArchitecture>
         </InstallationTarget>
         <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Pro">
@@ -29,7 +29,7 @@
         </InstallationTarget>
         <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Enterprise">
             <ProductArchitecture>amd64</ProductArchitecture>
-        </InstallationTarget>-->
+        </InstallationTarget>
 
     </Installation>
     <Prerequisites>
