@@ -50,11 +50,12 @@ namespace BlazmExtension
                     }
                 }
 
-                //If files contains a scss file, skip the css and map files
-                if (files.Any(f => f.EndsWith(".scss")))
+                //If files contains a scss,less or sass file, skip the css and map files
+                if (files.Any(f => f.EndsWith(".scss") || f.EndsWith(".less") || f.EndsWith(".sass")))
                 {
                     files = files.Where(f => !f.EndsWith(".css") && !f.EndsWith(".css.map")).ToList();
                 }
+                
 
                 if (files.Count > 1)
                 {
