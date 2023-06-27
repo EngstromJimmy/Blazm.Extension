@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" ?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-    <Metadata>
-        <Identity Id="BlazmExtension.a0f59921-9553-46c5-b0cf-4c4921326541" Version="1.5" Language="en-US" Publisher="EngstromJimmy" />
-        <DisplayName>BlazmExtension</DisplayName>
-        <Description xml:space="preserve">Extension that helps you with common Blazor tasks like creating a Isolated CSS or JavaScript from a context menu item</Description>
-        <Icon>Resources\Icon.png</Icon>
-        <PreviewImage>Resources\Icon.png</PreviewImage>
-    </Metadata>
-    <Installation>
+  <Metadata>
+	<Identity Id="BlazmExtension.a0f59921-9553-46c5-b0cf-4c4921326541" Version="1.6" Language="en-US" Publisher="EngstromJimmy" />
+	<DisplayName>BlazmExtension</DisplayName>
+	<Description xml:space="preserve">Extension that helps you with common Blazor tasks like creating a Isolated CSS or JavaScript from a context menu item</Description>
+	<Icon>Resources\Icon.png</Icon>
+	<PreviewImage>Resources\Icon.png</PreviewImage>
+  </Metadata>
+  <Installation>
 
 
-        <!--<InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Community">
+	<InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Community">
             <ProductArchitecture>arm64</ProductArchitecture>
         </InstallationTarget>
         <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Pro">
@@ -18,24 +18,24 @@
         </InstallationTarget>
         <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Enterprise">
             <ProductArchitecture>arm64</ProductArchitecture>
-        </InstallationTarget>-->
-
-
-        <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
-            <ProductArchitecture>amd64</ProductArchitecture>
-        </InstallationTarget>
-        <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Pro">
-            <ProductArchitecture>amd64</ProductArchitecture>
-        </InstallationTarget>
-        <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Enterprise">
-            <ProductArchitecture>amd64</ProductArchitecture>
         </InstallationTarget>
 
-    </Installation>
-    <Prerequisites>
-        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,)" DisplayName="Visual Studio core editor" />
-    </Prerequisites>
-    <Assets>
-        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-    </Assets>
+
+	<!--<InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
+	  <ProductArchitecture>amd64</ProductArchitecture>
+	</InstallationTarget>
+	<InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Pro">
+	  <ProductArchitecture>amd64</ProductArchitecture>
+	</InstallationTarget>
+	<InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Enterprise">
+	  <ProductArchitecture>amd64</ProductArchitecture>
+	</InstallationTarget>-->
+
+  </Installation>
+  <Prerequisites>
+	<Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0,)" DisplayName="Visual Studio core editor" />
+  </Prerequisites>
+  <Assets>
+	<Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+  </Assets>
 </PackageManifest>

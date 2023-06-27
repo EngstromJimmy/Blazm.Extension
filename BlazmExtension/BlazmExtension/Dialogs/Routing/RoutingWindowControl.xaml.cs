@@ -1,4 +1,5 @@
-﻿using EnvDTE;
+﻿using Community.VisualStudio.Toolkit;
+using EnvDTE;
 using Microsoft.VisualStudio.Package;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -37,12 +38,8 @@ public partial class RoutingWindowControl : UserControl
             RoutingDataList.Clear();
             if (_projects.Length != 0 && _projects != null)
             {
-                foreach (EnvDTE.Project project in _projects)
-                {
-                    //get the project path
-                    string _directoryPath = new FileInfo(project.FullName).DirectoryName;
-                    string rowText;
-                    string[] razorFiles = Directory.GetFiles(_directoryPath, "*.razor", SearchOption.AllDirectories);
+                    string rowText;                    
+                    IEnumerable<string> razorFiles = GetAllRazorFilesInSolution(dte.Solution);   
 
                     foreach (string file in razorFiles)
                     {
@@ -68,13 +65,12 @@ public partial class RoutingWindowControl : UserControl
                         }
 
                     }
-                }
             }
             else
             {
                 //RoutingDataList.Add(new RoutingItem() { Name = "No Project in solution or selected" });
             }
-            RoutingGrid.ItemsSource = RoutingDataList.OrderBy(i => i.Name);
+            RoutingGrid.ItemsSource = RoutingDataList.OrderBy(i => i.Content);
         }
         catch (Exception ex)
         {
@@ -89,7 +85,45 @@ public partial class RoutingWindowControl : UserControl
         Load();
     }
 
-    
+
+    private IEnumerable<string> GetAllRazorFilesInSolution(EnvDTE.Solution solution)
+    {
+        ThreadHelper.ThrowIfNotOnUIThread();
+        Projects projects = solution.Projects;
+        foreach (EnvDTE.Project project in projects)
+        {
+            foreach (ProjectItem projectItem in project.ProjectItems)
+            {
+                foreach (string file in GetAllRazorFilesInProjectItem(projectItem))
+                {
+                    yield return file;
+                }
+            }
+        }
+    }
+
+    private IEnumerable<string> GetAllRazorFilesInProjectItem(ProjectItem projectItem)
+    {
+        ThreadHelper.ThrowIfNotOnUIThread();
+        if (projectItem.Kind == EnvDTE.Constants.vsProjectItemKindPhysicalFile)
+        {
+            if (projectItem.Name.EndsWith(".razor", StringComparison.OrdinalIgnoreCase))
+            {
+                yield return projectItem.FileNames[0];
+            }
+        }
+        else if (projectItem.Kind == EnvDTE.Constants.vsProjectItemKindPhysicalFolder ||
+                 projectItem.Kind == EnvDTE.Constants.vsProjectItemKindVirtualFolder)
+        {
+            foreach (ProjectItem subItem in projectItem.ProjectItems)
+            {
+                foreach (string file in GetAllRazorFilesInProjectItem(subItem))
+                {
+                    yield return file;
+                }
+            }
+        }
+    }
 
     private void RoutingGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
