@@ -157,8 +157,6 @@
 		</GuidSymbol>
 	</Symbols>
 	
-	
-
 	<VisibilityConstraints>
 		<VisibilityConstraints>
 			<VisibilityItem guid="BlazmExtension" id="CreateIsolatedCss" context="RazorContextGuid"/>
