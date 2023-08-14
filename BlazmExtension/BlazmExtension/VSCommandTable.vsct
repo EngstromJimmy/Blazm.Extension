@@ -10,7 +10,7 @@
 		
 		<Groups>
 			<Group guid="BlazmExtension" id="MyMenuGroup" priority="0x0600">
-			<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
+				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_ITEMNODE"/>
 			</Group>
 			<Group guid="BlazmExtension" id="RazorFileMenu" priority="0x0600">
 				<Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_CODEWIN"/>
@@ -19,6 +19,11 @@
 			<Group guid="BlazmExtension" id="BlazmExtensionMenuGroup" priority="0x0700">
 				<Parent guid="BlazmExtension" id="BlazmExtensionMenu" />
 			</Group>
+
+			<Group guid="BlazmExtension" id="CreatebUnitTestSubMenuGroup" priority="0x0700">
+				<Parent guid="BlazmExtension" id="CreatebUnitTestSubMenu" />
+			</Group>
+
 		</Groups>
 
 		<Bitmaps>
@@ -77,9 +82,26 @@
 					<LocCanonicalName>.BlazmExtension.MoveCodehind</LocCanonicalName>
 				</Strings>
 			</Button>
-			
 
-			
+
+			<Button guid="BlazmExtension" id="CreatebUnitTestRazor" priority="0x0200" type="Button">
+				<Parent guid="BlazmExtension" id="CreatebUnitTestSubMenuGroup" />
+				<Icon guid="RazorIcons" id="razorIcon" />
+				<Strings>
+					<ButtonText>As Razor syntax</ButtonText>
+					<LocCanonicalName>.BlazmExtension.CreatebUnitTestRazor</LocCanonicalName>
+				</Strings>
+			</Button>
+
+			<Button guid="BlazmExtension" id="CreatebUnitTestCs" priority="0x0200" type="Button">
+				<Parent guid="BlazmExtension" id="CreatebUnitTestSubMenuGroup" />
+				<Icon guid="CsIcons" id="csIcon" />
+				<Strings>
+					<ButtonText>As C# class syntax</ButtonText>
+					<LocCanonicalName>.BlazmExtension.CreatebUnitTestCs</LocCanonicalName>
+				</Strings>
+			</Button>
+
 			<Button guid="BlazmExtension" id="CreateIsolatedCss" priority="0x0200" type="Button">
 				<Parent guid="BlazmExtension" id="MyMenuGroup" />
 				<Icon guid="CssIcons" id="cssIcon" />
@@ -118,6 +140,15 @@
 					<CommandName>Blazm</CommandName>
 				</Strings>
 			</Menu>
+
+			<Menu guid="BlazmExtension" id="CreatebUnitTestSubMenu" priority="0x0199" type="Menu">
+				<Parent guid="BlazmExtension" id="MyMenuGroup" />
+				<CommandFlag>DynamicVisibility</CommandFlag>
+				<Strings>
+					<ButtonText>Generate bUnit test (to clipboard)</ButtonText>
+					<CommandName>Generate bUnit test (to clipboard)</CommandName>
+				</Strings>
+			</Menu>
 		</Menus>
 		
 	</Commands>
@@ -129,6 +160,9 @@
 		<GuidSymbol name="BlazmExtension" value="{e12b1962-2ac4-416a-af19-2c6b8731922d}">
 			<IDSymbol name="MyMenuGroup" value="0x0001" />
 			<IDSymbol name="RazorFileMenu" value="0x0002" />
+			<IDSymbol name="CreatebUnitTestRazor" value="0x097" />
+			<IDSymbol name="CreatebUnitTestCs" value="0x098" />
+			<IDSymbol name="CreatebUnitTestSubMenu" value="0x099" />
 			<IDSymbol name="CreateIsolatedCss" value="0x0100" />
 			<IDSymbol name="CreateIsolatedJavaScript" value="0x0200" />
 			<IDSymbol name="CreateCodebehind" value="0x0250" />
@@ -137,9 +171,10 @@
 			<IDSymbol name="ExtractToComponent" value="0x0500" />
 			<IDSymbol name="RoutingWindow" value="0x0600" />
 			<IDSymbol name="SwitchToNestedFile" value="0x0700" />
-			
+			<IDSymbol name="CreatebUnitTestGroup" value="0x0800" />
 			<IDSymbol name="BlazmExtensionMenuGroup" value="0x1020" />
 			<IDSymbol name="BlazmExtensionMenu" value="0x1021" />
+			<IDSymbol name="CreatebUnitTestSubMenuGroup" value="0x1022" />
 		</GuidSymbol>
 		<GuidSymbol name="RazorContextGuid" value="{ba1aa6e4-68f5-4a4f-97c0-cbf91710430e}"/>
 		<GuidSymbol name="RazorCsContextGuid" value="{8f08cd3a-1f0b-4114-8a32-b148e8505468}"/>
@@ -159,6 +194,7 @@
 	
 	<VisibilityConstraints>
 		<VisibilityConstraints>
+			<VisibilityItem guid="BlazmExtension" id="CreatebUnitTestSubMenu" context="RazorContextGuid"/>
 			<VisibilityItem guid="BlazmExtension" id="CreateIsolatedCss" context="RazorContextGuid"/>
 			<VisibilityItem guid="BlazmExtension" id="CreateIsolatedJavaScript" context="RazorContextGuid"/>
 			<VisibilityItem guid="BlazmExtension" id="MoveNamespace" context="RazorContextGuid"/>

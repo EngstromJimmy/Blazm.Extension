@@ -11,7 +11,7 @@ namespace BlazmExtension
         public const string Name = "BlazmExtension";
         public const string Description = @"Extension that helps you with common Blazor tasks like creating a Isolated CSS or JavaScript from a context menu item";
         public const string Language = "en-US";
-        public const string Version = "1.5";
+        public const string Version = "1.7.7";
         public const string Author = "EngstromJimmy";
         public const string Tags = "";
     }
