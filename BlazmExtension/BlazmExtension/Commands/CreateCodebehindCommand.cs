@@ -1,7 +1,11 @@
-﻿using EnvDTE;
+﻿using System.Collections.Generic;
+using EnvDTE;
 using EnvDTE80;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Windows.Documents;
 
 namespace BlazmExtension
 {
@@ -30,6 +34,7 @@ namespace BlazmExtension
 
                     string fileText = File.ReadAllText(razorFilePath);
                     string razorNamespace = "";
+                    List<TypeParamInfo> typeParamInfos = GetTypeParametersWithConstaints(fileText);
 
                     // A very simple example of parsing the namespace from the Razor file
                     string namespaceDirective = "@namespace";
@@ -90,7 +95,19 @@ namespace BlazmExtension
                     {
                         StringBuilder content = new StringBuilder();
                         content.AppendLine($"namespace {razorNamespace};");
-                        content.AppendLine($"public partial class {Path.GetFileNameWithoutExtension(fullPath)}");
+                        content.Append($"public partial class {Path.GetFileNameWithoutExtension(fullPath)}");
+                        if (typeParamInfos is { Count: > 0 })
+                        {
+                            var typeParamsStr = $"<{string.Join(", ", typeParamInfos.Select(x => x.Name))}>";
+                            var typeParamConstraints = string.Join(" ", typeParamInfos.Select(x => x.Constraint).Where(x => !string.IsNullOrWhiteSpace(x)));
+
+                            content.Append(typeParamsStr);
+                            if (!string.IsNullOrWhiteSpace(typeParamConstraints))
+                            {
+                                content.Append($" {typeParamConstraints}");
+                            }
+                        }
+                        content.AppendLine();
                         content.AppendLine("{");
                         content.AppendLine("");
                         content.AppendLine("}");
@@ -100,5 +117,24 @@ namespace BlazmExtension
                 }
             }
         }
+
+        private List<TypeParamInfo> GetTypeParametersWithConstaints(string fileStr)
+        {
+            Regex regex = new Regex(@"@typeparam\s+(\w+)\s*(where\s+\w+\s*:\s*\w+)*");
+            MatchCollection matches = regex.Matches(fileStr);
+
+            List<TypeParamInfo> typeParamtersWithConstraints = new ();
+            foreach (Match match in matches)
+            {
+                string typeParam = match.Groups[1].Value;
+                string constraint = match.Groups[2].Value;
+
+                
+                typeParamtersWithConstraints.Add(new (typeParam, constraint));
+            }
+            return typeParamtersWithConstraints;
+        }
+
+        internal sealed record TypeParamInfo(string Name, string Constraint);
     }
 }
