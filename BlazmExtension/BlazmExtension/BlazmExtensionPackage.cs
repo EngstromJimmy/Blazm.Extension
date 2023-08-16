@@ -3,12 +3,14 @@ global using Microsoft.VisualStudio.Shell;
 global using System;
 global using Task = System.Threading.Tasks.Task;
 using BlazmExtension.Dialogs.Routing;
+using BlazmExtension.Dialogs.ComponentReferences;
 using Microsoft.VisualStudio.Shell.Interop;
 using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace BlazmExtension
 {
+    [ProvideToolWindow(typeof(ComponentReferencesWindow))]
     [ProvideToolWindow(typeof(RoutingWindow))]
     [ProvideAutoLoad(UIContextGuids80.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
