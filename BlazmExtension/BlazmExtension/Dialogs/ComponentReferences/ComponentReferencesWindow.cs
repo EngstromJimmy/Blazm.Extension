@@ -7,7 +7,7 @@ namespace BlazmExtension.Dialogs.ComponentReferences
     {
         public ComponentReferencesWindow() : base(null)
         {
-            this.Caption = "Component References";
+            this.Caption = "Component Usages";
             this.Content = new ComponentReferencesControl();
         }
     }

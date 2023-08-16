@@ -48,7 +48,7 @@ namespace BlazmExtension.Dialogs.ComponentReferences
                     ComponentReferenceDataList.Add(componentReference);
                 }
 
-                ReferenceTextBlock.Text = $"<{componentName}> {ComponentReferenceDataList.Count} references found.";
+                ReferenceTextBlock.Text = $"<{componentName}> {ComponentReferenceDataList.Count} usages found.";
             }
             catch (Exception ex) { }
         }
