@@ -54,5 +54,6 @@ namespace BlazmExtension
         public const int jsIcon = 0x0001;
         public const int razorIcon = 0x0001;
         public const int csIcon = 0x0001;
+        public const int FindComponentReferences = 0x0800;
     }
 }

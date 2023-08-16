@@ -57,6 +57,15 @@
 				</Strings>
 			</Button>
 
+			<Button guid="BlazmExtension" id="FindComponentReferences" priority="0x0300" type="Button">
+				<Parent guid="BlazmExtension" id="RazorFileMenu" />
+				<Icon guid="RazorIcons" id="razorIcon" />
+				<Strings>
+					<ButtonText>Find Component References</ButtonText>
+					<LocCanonicalName>.BlazmExtension.FindComponentReferences</LocCanonicalName>
+				</Strings>
+			</Button>
+
 			<Button guid="BlazmExtension" id="ExtractToComponent" priority="0x0100" type="Button">
 				<Parent guid="BlazmExtension" id="RazorFileMenu" />
 				<Icon guid="RazorIcons" id="razorIcon" />
@@ -137,6 +146,7 @@
 			<IDSymbol name="ExtractToComponent" value="0x0500" />
 			<IDSymbol name="RoutingWindow" value="0x0600" />
 			<IDSymbol name="SwitchToNestedFile" value="0x0700" />
+			<IDSymbol name="FindComponentReferences" value="0x0800" />
 			
 			<IDSymbol name="BlazmExtensionMenuGroup" value="0x1020" />
 			<IDSymbol name="BlazmExtensionMenu" value="0x1021" />
@@ -167,6 +177,7 @@
 			<VisibilityItem guid="BlazmExtension" id="ExtractToComponent" context="RazorContextGuid"/>
 			<VisibilityItem guid="BlazmExtension" id="MoveCodebehind" context="RazorCsContextGuid"/>
 			<VisibilityItem guid="BlazmExtension" id="CreateCodebehind" context="RazorContextGuid"/>
+			<VisibilityItem guid="BlazmExtension" id="FindComponentReferences" context="RazorContextGuid"/>
 		</VisibilityConstraints>
 	</VisibilityConstraints>
 	
