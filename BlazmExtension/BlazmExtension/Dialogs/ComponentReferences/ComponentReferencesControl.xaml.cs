@@ -10,6 +10,7 @@ using System.Windows.Input;
 using BlazmExtension.ExtensionMethods;
 using Path = System.IO.Path;
 using TextSelection = EnvDTE.TextSelection;
+using System.Text.RegularExpressions;
 
 namespace BlazmExtension.Dialogs.ComponentReferences
 {
@@ -74,6 +75,7 @@ namespace BlazmExtension.Dialogs.ComponentReferences
             return usages;
         }
 
+        private Dictionary<string, Regex> _regexCache = new ();
         private List<ComponentReferenceItem> FindUsagesInFile(string componentName, string filePath)
         {
             var usages = new List<ComponentReferenceItem>();
@@ -81,13 +83,20 @@ namespace BlazmExtension.Dialogs.ComponentReferences
             // Read the file line by line
             var lines = File.ReadLines(filePath);
 
+            if (!_regexCache.TryGetValue(componentName, out var regex))
+            {
+                var pattern = $@"<{componentName}(?![a-zA-Z])";
+                regex = new Regex(pattern, RegexOptions.Compiled);
+                _regexCache[componentName] = regex;
+            }
+
             int lineNumber = 0;
             foreach (var line in lines)
             {
                 lineNumber++;  // Keep track of the current line number
 
                 // Check if the line contains the component's usage
-                if (line.Contains($"<{componentName}"))
+                if (regex.IsMatch(line))
                 {
                     usages.Add(new ComponentReferenceItem()
                     {
@@ -106,16 +115,18 @@ namespace BlazmExtension.Dialogs.ComponentReferences
         {
             if (!(ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) is DataGridRow row)) return;
 
-            ComponentReferenceItem item = (ComponentReferenceItem)row.DataContext;
-            ThreadHelper.ThrowIfNotOnUIThread();
-            var dte = (DTE)ServiceProvider.GlobalProvider.GetService(typeof(DTE));
-            if (dte != null)
+            if (row.DataContext is ComponentReferenceItem item)
             {
-                var window = dte.ItemOperations.OpenFile(item.FilePath);
-                if (window != null)
+                ThreadHelper.ThrowIfNotOnUIThread();
+                var dte = (DTE)ServiceProvider.GlobalProvider.GetService(typeof(DTE));
+                if (dte != null)
                 {
-                    TextSelection ts = (TextSelection)window.Document.Selection;
-                    ts?.GotoLine(item.LineNumber);
+                    var window = dte.ItemOperations.OpenFile(item.FilePath);
+                    if (window != null)
+                    {
+                        TextSelection ts = (TextSelection)window.Document.Selection;
+                        ts?.GotoLine(item.LineNumber);
+                    }
                 }
             }
         }
