@@ -39,40 +39,37 @@ namespace BlazmExtension.Dialogs.ComponentReferences
             {
                 ComponentReferenceDataList.Clear();
 
-                var componentReferences = FindComponentReferences(componentName);
-
-                foreach (var componentReferenceItem in componentReferences)
-                {
-                    ComponentReferenceDataList.Add(componentReferenceItem);
-                }
+                ReferenceTextBlock.Text = $"Searching for <{componentName}> usages.";
 
                 ComponentReferenceGrid.ItemsSource = ComponentReferenceDataList;
 
-                ReferenceTextBlock.Text = $"<{componentName}> {componentReferences.Count} references found.";
+                foreach (var componentReference in FindComponentReferences(componentName))
+                {
+                    ComponentReferenceDataList.Add(componentReference);
+                }
+
+                ReferenceTextBlock.Text = $"<{componentName}> {ComponentReferenceDataList.Count} references found.";
             }
             catch (Exception ex) { }
         }
 
-        private List<ComponentReferenceItem> FindComponentReferences(string componentName)
+        private IEnumerable<ComponentReferenceItem> FindComponentReferences(string componentName)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             var razorFiles = _dte.Solution.GetAllRazorFiles();
-            var usages = new List<ComponentReferenceItem>();
 
-            var results = razorFiles.Select(file => FindUsagesInFile(componentName, file));
 
-            foreach (var result in results)
+            foreach (var razorFile in razorFiles)
             {
-                foreach (var componentUsage in result)
+                var results = FindUsagesInFile(componentName, razorFile);
+                foreach (var componentUsage in results)
                 {
                     if (componentUsage != null)
                     {
-                        usages.Add(componentUsage);
+                        yield return componentUsage;
                     }
                 }
             }
-
-            return usages;
         }
 
         private Dictionary<string, Regex> _regexCache = new ();
