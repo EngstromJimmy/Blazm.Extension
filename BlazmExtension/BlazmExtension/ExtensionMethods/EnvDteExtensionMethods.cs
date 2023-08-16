@@ -13,56 +13,36 @@ namespace BlazmExtension.ExtensionMethods
             {
                 yield break;
             }
+
             ThreadHelper.ThrowIfNotOnUIThread();
+
             Projects projects = solution.Projects;
             foreach (Project project in projects)
             {
-                if (project.Kind == Constants.vsProjectItemKindSolutionItems)  // Solution folder
-                {
-                    foreach (ProjectItem subProjectItem in project.ProjectItems)
-                    {
-                        if (subProjectItem.SubProject != null)  // If this ProjectItem has a sub-project
-                        {
-                            foreach (string file in GetAllRazorFiles(subProjectItem.SubProject))
-                            {
-                                yield return file;
-                            }
-                        }
-                        else
-                        {
-                            foreach (string file in GetAllRazorFiles(subProjectItem))
-                            {
-                                yield return file;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    foreach (ProjectItem projectItem in project.ProjectItems)
-                    {
-                        foreach (string file in GetAllRazorFiles(projectItem))
-                        {
-                            yield return file;
-                        }
-                    }
-                }
-            }
-        }
-
-        private static IEnumerable<string> GetAllRazorFiles(this Project project)
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            foreach (ProjectItem projectItem in project.ProjectItems)
-            {
-                foreach (string file in GetAllRazorFiles(projectItem))
+                foreach (string file in ProcessProjectForRazorFiles(project))
                 {
                     yield return file;
                 }
             }
         }
 
-        private static IEnumerable<string> GetAllRazorFiles(this ProjectItem projectItem)
+        private static IEnumerable<string> ProcessProjectForRazorFiles(Project project)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            if (project.ProjectItems != null)  // Solution folder
+            {
+                foreach (ProjectItem subProjectItem in project.ProjectItems)
+                {
+                    foreach (var razorFile in ProcessProjectItemForRazorFiles(subProjectItem))
+                    {
+                        yield return razorFile;
+                    }
+                }
+            }
+        }
+
+        private static IEnumerable<string> ProcessProjectItemForRazorFiles(ProjectItem projectItem)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
@@ -86,15 +66,16 @@ namespace BlazmExtension.ExtensionMethods
                 {
                     foreach (ProjectItem subItem in projectItem.ProjectItems)
                     {
-                        foreach (string file in GetAllRazorFiles(subItem))
+                        foreach (string file in ProcessProjectItemForRazorFiles(subItem))
                         {
                             yield return file;
                         }
                     }
                 }
+
                 if (projectItem.SubProject != null)
                 {
-                    foreach (string file in GetAllRazorFiles(projectItem.SubProject))
+                    foreach (string file in ProcessProjectForRazorFiles(projectItem.SubProject))
                     {
                         yield return file;
                     }
