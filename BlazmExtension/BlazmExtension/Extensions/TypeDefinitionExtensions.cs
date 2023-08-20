@@ -30,29 +30,59 @@ namespace BlazmExtension.Extensions
             return typeDefinition.Properties.Where(x => x.CustomAttributes.Any(c => c.AttributeType.Name == "CascadingParameterAttribute"));
         }
 
+        public static IEnumerable<PropertyDefinition> GetParametersWithoutRenderFragments(this TypeDefinition typeDefinition)
+        {
+            return typeDefinition.Properties.Where(x => x.CustomAttributes.Any(c => c.AttributeType.Name == "ParameterAttribute") && !x.PropertyType.FullName.StartsWith( "Microsoft.AspNetCore.Components.RenderFragment"));
+        }
 
-        public static string GetParameterDeclarations(this TypeDefinition typeDefinition)
+        public static IEnumerable<PropertyDefinition> GetParametersRenderFragments(this TypeDefinition typeDefinition)
+        {
+            return typeDefinition.Properties.Where(x => x.CustomAttributes.Any(c => c.AttributeType.Name == "ParameterAttribute") && x.PropertyType.FullName.StartsWith("Microsoft.AspNetCore.Components.RenderFragment"));
+        }
+
+        public static string GetParameterDeclarations(this TypeDefinition typeDefinition,bool razorSyntax=true)
         {
             StringBuilder sb = new StringBuilder();
-            foreach (var property in typeDefinition.GetParameters())
+            if (!razorSyntax)
             {
-                sb.AppendLine(GetPropertyDeclaration(property));
+                foreach (var property in typeDefinition.GetParametersRenderFragments())
+                {
+                    sb.AppendLine(GetPropertyDeclaration(property, razorSyntax));
+                }
+            }
+
+            foreach (var property in typeDefinition.GetParametersWithoutRenderFragments())
+            {
+                sb.AppendLine(GetPropertyDeclaration(property,razorSyntax));
             }
             foreach (var property in typeDefinition.GetCascadingParameters())
             {
-                sb.AppendLine(GetPropertyDeclaration(property));
+                sb.AppendLine(GetPropertyDeclaration(property,razorSyntax));
             }
             return sb.ToString();
         }
     
-        public static string GetPropertyDeclaration(PropertyDefinition property)
+        public static string GetPropertyDeclaration(PropertyDefinition property, bool razorSyntax=true)
         {
+
             var friendlyName = GetFriendlyTypeName(property.PropertyType);
+            if (!razorSyntax && property.PropertyType.FullName == "Microsoft.AspNetCore.Components.RenderFragment")
+            {
+                friendlyName = "string";
+            }
+
             string result = $"            {friendlyName} {FirstCharToLowerCase(property.Name)}";
             var declaration = "default!;";
-            if (friendlyName == "RenderFragment")
+            if (property.PropertyType.FullName=="Microsoft.AspNetCore.Components.RenderFragment")
             {
-                declaration = "@<b>render me</b>;";
+                if (razorSyntax)
+                {
+                    declaration = "@<b>render me</b>;";
+                }
+                else
+                {
+                    declaration = "\"<b>render me</b>\";";
+                }
             }
             else if (friendlyName == "Action")
             {
@@ -77,7 +107,7 @@ namespace BlazmExtension.Extensions
                 {
                     if (property.PropertyType.FullName == "System.Net.Http.HttpClient")
                     {
-                        sb.AppendLine($"            Services.AddMockHttpClient(); //See <a href=\"https://bunit.dev/docs/test-doubles/mocking-httpclient.html\">this link</a> for more information.");
+                        sb.AppendLine($"            //Services.AddMockHttpClient(); //See <a href=\"https://bunit.dev/docs/test-doubles/mocking-httpclient.html\">this link</a> for more information.");
                     }
                     else if (bunitIncludedTestDoubles.Contains(property.PropertyType.FullName))
                     {

@@ -68,6 +68,56 @@ The window will show all the routes in your project, and you can double-click on
 
 <img src="https://github.com/EngstromJimmy/Blazm.Extension/blob/main/Images/Routes.png?raw=true" width="400">
 
+###bUnit test generation
+Think writing tests is tedious? Well, this new feature promises to eliminate much of that monotony, letting us zero in on the exciting parts!
+Currently, this feature is still undergoing refinement and is in its beta phase. Your feedback and suggestions would be invaluable as we refine this tool.
+
+This feature will automatically produce test code:
+
+```csharp
+@inherits TestContext
+@using Bunit
+@using BlazorApp1.Pages;
+@code
+{
+    [Fact]
+    public void Test1()
+    {
+        //Arrange
+        //Services.AddSingleton<WeatherForecastService,/*Add implementation for WeatherForecastService*/>();
+
+        var cut = Render(@<FetchData></FetchData>);
+        
+        //Act
+
+        //Assert
+    }
+}
+```
+For those who lean towards a pure C# syntax, the generator will provide:
+
+```csharp
+
+public class FetchDataTests : TestContext
+{
+    [Fact]
+    public void Test1()
+    {
+        //Arrange
+        //Services.AddSingleton<WeatherForecastService,/*Add implementation for WeatherForecastService*/>();
+        var cut = RenderComponent<FetchData>();
+        
+        //Act
+
+        //Assert
+    }
+}
+```
+This generator is designed to seamlessly incorporate dependency injected properties, render fragments, parameters, and much more. While I've tried to cover the most typical scenarios, there may be edge cases I've missed. Bear with me as I continue to tweak it.
+
+There's an ongoing challenge with line break placements, but I'm optimistic about finding a resolution. To leverage this feature, simply right-click on a component and choose the desired command.
+
+<img src="https://github.com/EngstromJimmy/Blazm.Extension/blob/main/Images/bUnit.png?raw=true" width="400">
 
 ## Conclusion
 I hope you find this extension useful.

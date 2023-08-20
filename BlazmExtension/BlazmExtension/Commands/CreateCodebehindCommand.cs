@@ -34,7 +34,7 @@ namespace BlazmExtension
 
                     string fileText = File.ReadAllText(razorFilePath);
                     string razorNamespace = "";
-                    List<TypeParamInfo> typeParamInfos = GetTypeParametersWithConstaints(fileText);
+                    List<TypeParamInfo> typeParamInfos = GetTypeParametersWithConstraints(fileText);
 
                     // A very simple example of parsing the namespace from the Razor file
                     string namespaceDirective = "@namespace";
@@ -118,7 +118,7 @@ namespace BlazmExtension
             }
         }
 
-        private List<TypeParamInfo> GetTypeParametersWithConstaints(string fileStr)
+        private List<TypeParamInfo> GetTypeParametersWithConstraints(string fileStr)
         {
             Regex regex = new Regex(@"@typeparam\s+(\w+)\s*(where\s+\w+\s*:\s*\w+)*");
             MatchCollection matches = regex.Matches(fileStr);

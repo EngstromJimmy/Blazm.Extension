@@ -190,6 +190,9 @@
 			<GuidSymbol name="CsIcons" value="{7d860ae9-adfa-4fda-b13b-083a6dd309b3}">
 			<IDSymbol name="csIcon" value="1" />
 		</GuidSymbol>
+		<GuidSymbol name="bunitIcons" value="{7d860ae9-adfa-4fda-b13b-083a6dd309b4}">
+			<IDSymbol name="bunitIcon" value="1" />
+		</GuidSymbol>
 	</Symbols>
 	
 	<VisibilityConstraints>

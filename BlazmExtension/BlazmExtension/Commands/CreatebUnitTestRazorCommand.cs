@@ -65,6 +65,9 @@ namespace BlazmExtension
         {
             var sb = new StringBuilder();
             sb.AppendLine($"@inherits TestContext");
+            sb.AppendLine($"@using Bunit");
+            sb.AppendLine($"@using {type.Namespace};");
+
             sb.AppendLine($"@code");
             sb.AppendLine("    {");
             sb.AppendLine($"        [Fact]");
@@ -74,8 +77,7 @@ namespace BlazmExtension
             sb.AppendLine(type.GetInjectDeclarations());
             sb.AppendLine(type.GetParameterDeclarations());
 
-            sb.AppendLine($"            var cut = Render(@");
-            sb.Append("                ");
+            sb.Append($"            var cut = Render(@");
             foreach (var property in type.GetCascadingParameters())
             {
                 sb.AppendLine($"<CascadingValue Value=\"@{TypeDefinitionExtensions.FirstCharToLowerCase(property.Name)}\">");
@@ -83,16 +85,26 @@ namespace BlazmExtension
             }
     
             sb.AppendLine($"<{type.Name}");
-            foreach (var property in type.GetParameters())
+            foreach (var property in type.GetParametersWithoutRenderFragments())
             {
                 sb.Append("                  ");
                 sb.AppendLine($"{property.Name}=\"@{TypeDefinitionExtensions.FirstCharToLowerCase(property.Name)}\"");
             }
-            sb.AppendLine("                  />");
+            sb.AppendLine("                  >");
+
+            //Add all Renderfragments
+            foreach (var property in type.GetParametersRenderFragments())
+            {
+                sb.Append("                  ");
+                sb.AppendLine($"<{property.Name}>");
+                sb.Append($"<b>{property.Name} fragment</b>");
+                sb.AppendLine($"</{property.Name}>");
+            }
+            sb.AppendLine($"                  </{type.Name}>");
             foreach (var property in type.GetCascadingParameters())
             {
                 sb.Append("                  ");
-                sb.AppendLine($"</CascadingValue>");
+                sb.Append($"</CascadingValue>");
             }
             sb.Append($");");
             sb.AppendLine($"");

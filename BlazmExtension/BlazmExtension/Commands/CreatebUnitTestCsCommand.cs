@@ -73,16 +73,25 @@ namespace BlazmExtension
             sb.AppendLine($"            //Arrange");
             //Add injects
             sb.Append(type.GetInjectDeclarations());
-            sb.Append(type.GetParameterDeclarations());
+            sb.Append(type.GetParameterDeclarations(false));
 
             sb.Append($"            var cut = RenderComponent<{type.Name}>(");
             if (type.GetParameters().Any())
             {
                 sb.AppendLine("parameters => parameters");
+                //Todo: Add Childcontent parameters and RenderFragments
+
+
                 foreach (var property in type.GetParameters())
                 {
+                    if (property.Name == "ChildContent")
+                    {
+                        sb.AppendLine($"                .AddChildContent({TypeDefinitionExtensions.FirstCharToLowerCase(property.Name)})");
+                    }
+                    else
+                    {
                         sb.AppendLine($"                .Add(p => p.{property.Name}, {TypeDefinitionExtensions.FirstCharToLowerCase(property.Name)})");
-                        
+                    }  
                 }
                 foreach (var property in type.GetCascadingParameters())
                 {
