@@ -32,6 +32,9 @@ namespace BlazmExtension
 
         public const string CsIconsString = "7d860ae9-adfa-4fda-b13b-083a6dd309b3";
         public static Guid CsIcons = new Guid(CsIconsString);
+
+        public const string bunitIconsString = "7d860ae9-adfa-4fda-b13b-083a6dd309b4";
+        public static Guid bunitIcons = new Guid(bunitIconsString);
     }
     /// <summary>
     /// Helper class that encapsulates all CommandIDs uses across VS Package.
@@ -40,6 +43,9 @@ namespace BlazmExtension
     {
         public const int MyMenuGroup = 0x0001;
         public const int RazorFileMenu = 0x0002;
+        public const int CreatebUnitTestRazor = 0x0097;
+        public const int CreatebUnitTestCs = 0x0098;
+        public const int CreatebUnitTestSubMenu = 0x0099;
         public const int CreateIsolatedCss = 0x0100;
         public const int CreateIsolatedJavaScript = 0x0200;
         public const int CreateCodebehind = 0x0250;
@@ -48,8 +54,10 @@ namespace BlazmExtension
         public const int ExtractToComponent = 0x0500;
         public const int RoutingWindow = 0x0600;
         public const int SwitchToNestedFile = 0x0700;
+        public const int CreatebUnitTestGroup = 0x0800;
         public const int BlazmExtensionMenuGroup = 0x1020;
         public const int BlazmExtensionMenu = 0x1021;
+        public const int CreatebUnitTestSubMenuGroup = 0x1022;
         public const int cssIcon = 0x0001;
         public const int jsIcon = 0x0001;
         public const int razorIcon = 0x0001;

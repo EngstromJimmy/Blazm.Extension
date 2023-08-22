@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
 
         <Label Name="NameLabel" Content="Component name:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="26" FontWeight="SemiBold" Width="110" />
-        <TextBox Name="Name"  Height="23" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="1" Padding="1,1,1,1" />
+        <TextBox Name="Name"  Height="23" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Column="1" Padding="1,1,1,1" Width="226" />
         <Button Grid.Column="2" Content="Add component" HorizontalAlignment="Center" VerticalAlignment="Center" Width="116" Height="23" IsDefault="True" Name="btnCreate" Click="Button_Click" />
     </Grid>
 </Window>
