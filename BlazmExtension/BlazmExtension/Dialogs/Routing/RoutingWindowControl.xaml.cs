@@ -44,37 +44,34 @@ public partial class RoutingWindowControl : UserControl
             RoutingDataList.Clear();
             if (_projects.Length != 0 && _projects != null)
             {
-                    string rowText;
-                    IEnumerable<string> razorFiles = dte.Solution.GetAllRazorFiles();   
+                string rowText;
+                IEnumerable<string> razorFiles = dte.Solution.GetAllRazorFiles();   
 
-                    foreach (string file in razorFiles)
+                foreach (string file in razorFiles)
+                {
+                    if (!RoutingDataList.Any(_ => _.Name == file))
                     {
-                        if (!RoutingDataList.Any(_ => _.Name == file))
+                        using (StreamReader sr = new StreamReader(file))
                         {
-                            using (StreamReader sr = new StreamReader(file))
+                            int row = 0;
+                            while (sr.Peek() >= 0)
                             {
-                                int row = 0;
-                                while (sr.Peek() >= 0)
+                                rowText = sr.ReadLine();
+
+                                if (rowText.Contains("@page") && !rowText.StartsWith("@*"))
                                 {
-                                    rowText = sr.ReadLine();
-
-                                    if (rowText.Contains("@page") && !rowText.StartsWith("@*"))
-                                    {
-                                        string content = rowText.Replace("@page", "").Replace("\"", "").Trim();
-                                        RoutingDataList.Add(new RoutingItem() { Name = file, Content = content });
-                                    }
-                                    else if (row > 5)
-                                    {
-                                        break;
-                                    }
-
-                                    row++;
+                                    string content = rowText.Replace("@page", "").Replace("\"", "").Trim();
+                                    RoutingDataList.Add(new RoutingItem() { Name = file, Content = content });
                                 }
+                                else if (row > 5)
+                                {
+                                    break;
+                                }
+
+                                row++;
                             }
                         }
-                }
-
-
+                    }
                 }
             }
             else
