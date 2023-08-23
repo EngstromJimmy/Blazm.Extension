@@ -31,7 +31,7 @@ namespace BlazmExtension
             var lineText = point.CreateEditPoint().GetLines(point.Line, point.Line + 1);
 
             // Use regex to get the component name
-            var componentNameRegex = new Regex(@"<(\w+)(?:\s[^>]*?/?>|>)");
+            var componentNameRegex = new Regex(@"<(\w+)(?:\s*[^>]*?/?>|>)");
             var match = componentNameRegex.Match(lineText); // Searching backwards from the caret
             var componentName = match.Groups[1].Value;
 

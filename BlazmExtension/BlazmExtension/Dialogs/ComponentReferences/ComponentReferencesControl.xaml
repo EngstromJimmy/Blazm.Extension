@@ -40,6 +40,7 @@
                         </MultiTrigger.Conditions>
                         <Setter Property="Background" Value="Gray"/>
                         <!-- This is the background when the row is selected but the DataGrid doesn't have focus -->
+                        <Setter Property="Foreground" Value="{DynamicResource {x:Static vsShell:VsBrushes.ToolWindowTextKey}}"/>
                     </MultiTrigger>
                 </Style.Triggers>
             </Style>
@@ -48,6 +49,7 @@
             <Style TargetType="DataGridCell">
                 <Setter Property="Background" Value="{DynamicResource {x:Static vsShell:VsBrushes.BackgroundKey}}"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static vsShell:VsBrushes.ToolWindowTextKey}}"/>
             </Style>
 
             <!-- Style for the DataGrid headers -->
