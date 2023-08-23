@@ -16,6 +16,7 @@ using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using BlazmExtension.ExtensionMethods;
 
 namespace BlazmExtension.Dialogs.Routing;
 
@@ -44,16 +45,7 @@ public partial class RoutingWindowControl : UserControl
             if (_projects.Length != 0 && _projects != null)
             {
                 string rowText;
-             
-                //This is infact slower, but might be more accurate
-                foreach (var route in GetAllRoutesFromAssembly(dte.Solution))
-                {
-                    RoutingDataList.Add(route);
-                }
-
-                IEnumerable<string> razorFiles= Enumerable.Empty<string>();
-
-                razorFiles = GetAllRazorFilesInSolution(dte.Solution);
+                IEnumerable<string> razorFiles = dte.Solution.GetAllRazorFiles();   
 
                 foreach (string file in razorFiles)
                 {
@@ -80,7 +72,6 @@ public partial class RoutingWindowControl : UserControl
                             }
                         }
                     }
-
                 }
             }
             else
@@ -103,46 +94,6 @@ public partial class RoutingWindowControl : UserControl
     private void RefreshButton_Click(object sender, RoutedEventArgs e)
     {
         Load();
-    }
-
-
-    private IEnumerable<string> GetAllRazorFilesInSolution(EnvDTE.Solution solution)
-    {
-        ThreadHelper.ThrowIfNotOnUIThread();
-        Projects projects = solution.Projects;
-        foreach (EnvDTE.Project project in projects)
-        {
-            foreach (ProjectItem projectItem in project.ProjectItems)
-            {
-                foreach (string file in GetAllRazorFilesInProjectItem(projectItem))
-                {
-                    yield return file;
-                }
-            }
-        }
-    }
-
-    private IEnumerable<string> GetAllRazorFilesInProjectItem(ProjectItem projectItem)
-    {
-        ThreadHelper.ThrowIfNotOnUIThread();
-        if (projectItem.Kind == EnvDTE.Constants.vsProjectItemKindPhysicalFile)
-        {
-            if (projectItem.Name.EndsWith(".razor", StringComparison.OrdinalIgnoreCase))
-            {
-                yield return projectItem.FileNames[0];
-            }
-        }
-        else if (projectItem.Kind == EnvDTE.Constants.vsProjectItemKindPhysicalFolder ||
-                 projectItem.Kind == EnvDTE.Constants.vsProjectItemKindVirtualFolder)
-        {
-            foreach (ProjectItem subItem in projectItem.ProjectItems)
-            {
-                foreach (string file in GetAllRazorFilesInProjectItem(subItem))
-                {
-                    yield return file;
-                }
-            }
-        }
     }
 
     private void RoutingGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
