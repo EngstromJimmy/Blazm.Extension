@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.Shell.Interop;
 using System.Text.RegularExpressions;
 using BlazmExtension.Dialogs.ComponentReferences;
-
+using System.IO;
 
 namespace BlazmExtension
 {
@@ -34,6 +34,15 @@ namespace BlazmExtension
             var componentNameRegex = new Regex(@"<(\w+)(?:\s*[^>]*?/?>|>)");
             var match = componentNameRegex.Match(lineText); // Searching backwards from the caret
             var componentName = match.Groups[1].Value;
+
+            if (string.IsNullOrEmpty(componentName))
+            {
+                try
+                {
+                    componentName = Path.GetFileNameWithoutExtension(dte.ActiveDocument.FullName);
+                }
+                catch { }
+            }
 
             if (string.IsNullOrWhiteSpace(componentName))
             {
