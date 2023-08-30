@@ -45,7 +45,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Commands\FindComponentReferencesCommand.cs" />
+    <Compile Include="Commands\FindComponentUsagesSECommand.cs" />
+    <Compile Include="Commands\FindComponentUsagesCommand.cs" />
     <Compile Include="Commands\CreatebUnitTestRazorCommand.cs" />
     <Compile Include="Commands\CreateCodebehindCommand.cs" />
     <Compile Include="Commands\CreatebUnitTestCsCommand.cs" />
