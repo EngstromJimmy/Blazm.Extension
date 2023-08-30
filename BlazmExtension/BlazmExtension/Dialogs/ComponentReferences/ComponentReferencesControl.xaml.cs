@@ -11,6 +11,7 @@ using BlazmExtension.ExtensionMethods;
 using Path = System.IO.Path;
 using TextSelection = EnvDTE.TextSelection;
 using System.Text.RegularExpressions;
+using BlazmExtension.Singletons;
 
 namespace BlazmExtension.Dialogs.ComponentReferences
 {
@@ -125,6 +126,105 @@ namespace BlazmExtension.Dialogs.ComponentReferences
                         ts?.GotoLine(item.LineNumber);
                     }
                 }
+            }
+        }
+
+        private void OnSearchButtonClick(object sender, RoutedEventArgs e)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            string componentName = ComponentSearchTextBox.Text;
+
+            if (string.IsNullOrWhiteSpace(componentName))
+            {
+                return;
+            }
+
+            Initialize(componentName);
+        }
+
+        private void ComponentSearchTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            PlaceholderTextBlock.Visibility = Visibility.Collapsed;
+        }
+
+        private void ComponentSearchTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            PlaceholderTextBlock.Visibility = string.IsNullOrEmpty(ComponentSearchTextBox.Text)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
+
+        private bool handlingTextChange = false;
+        private bool isDeletion = false;
+
+        private void ComponentSearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!handlingTextChange && !isDeletion)
+            {
+                handlingTextChange = true;  // Flag to indicate we're in the midst of handling
+
+                // Your logic to find the closest matching component name
+                string input = ComponentSearchTextBox.Text;
+                if (!string.IsNullOrWhiteSpace(input))
+                {
+                    ComponentSearchTextBox_GotFocus(null, null);
+                }
+                var matchingComponent = ComponentNameProvider.GetComponentNames().OrderBy(x => x.Length).FirstOrDefault(c => c.StartsWith(input, StringComparison.OrdinalIgnoreCase));
+
+                if (matchingComponent != null)
+                {
+                    // Unhook the TextChanged event
+                    ComponentSearchTextBox.TextChanged -= ComponentSearchTextBox_TextChanged;
+
+                    // Update the TextBox's text and selection
+                    ComponentSearchTextBox.Text = matchingComponent;
+                    ComponentSearchTextBox.Select(input.Length, matchingComponent.Length - input.Length);
+
+                    // Rehook the TextChanged event
+                    ComponentSearchTextBox.TextChanged += ComponentSearchTextBox_TextChanged;
+                }
+
+                handlingTextChange = false;  // Reset the flag
+            }
+            else
+            {
+                isDeletion = false;  // Reset the deletion flag
+            }
+        }
+
+        private void ComponentSearchTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Tab && ComponentSearchTextBox.SelectedText.Length > 0)
+            {
+                // Move the caret to the end and clear the selection
+                ComponentSearchTextBox.CaretIndex = ComponentSearchTextBox.Text.Length;
+                ComponentSearchTextBox.SelectionLength = 0;
+
+                // Important to set the event as handled
+                e.Handled = true;
+            }
+            else if (e.Key is Key.Back or Key.Delete)
+            {
+                isDeletion = true;  // Set the deletion flag
+            }
+        }
+
+        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (ComponentSearchTextBox.IsFocused)
+            {
+                Keyboard.ClearFocus();
+                ComponentSearchTextBox_LostFocus(null, null);
+            }
+        }
+
+        private void Grid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (ComponentSearchTextBox.IsFocused)
+            {
+                Keyboard.ClearFocus();
+                ComponentSearchTextBox_LostFocus(null, null);
             }
         }
     }

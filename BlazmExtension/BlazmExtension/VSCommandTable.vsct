@@ -139,6 +139,15 @@
 					<LocCanonicalName>.BlazmExtension.CreateCodebehind</LocCanonicalName>
 				</Strings>
 			</Button>
+
+			<Button guid="BlazmExtension" id="FindComponentUsagesSE" priority="0x0500" type="Button">
+				<Parent guid="BlazmExtension" id="MyMenuGroup" />
+				<Icon guid="RazorIcons" id="razorIcon" />
+				<Strings>
+					<ButtonText>Find component usages</ButtonText>
+					<LocCanonicalName>.BlazmExtension.FindComponentUsagesSE</LocCanonicalName>
+				</Strings>
+			</Button>
 		</Buttons>
 
 		<Menus>
@@ -181,6 +190,7 @@
 			<IDSymbol name="RoutingWindow" value="0x0600" />
 			<IDSymbol name="SwitchToNestedFile" value="0x0700" />
 			<IDSymbol name="FindComponentUsages" value="0x0800" />
+			<IDSymbol name="FindComponentUsagesSE" value="0x0900" />
 			
 			<IDSymbol name="CreatebUnitTestGroup" value="0x0800" />
 			<IDSymbol name="BlazmExtensionMenuGroup" value="0x1020" />

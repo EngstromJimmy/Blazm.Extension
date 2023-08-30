@@ -1,6 +1,7 @@
 ﻿using EnvDTE;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.IO;
+using BlazmExtension.Singletons;
 using Project = EnvDTE.Project;
 
 namespace BlazmExtension.ExtensionMethods
@@ -16,14 +17,18 @@ namespace BlazmExtension.ExtensionMethods
 
             ThreadHelper.ThrowIfNotOnUIThread();
 
+            var componentNames = new List<string>();
             Projects projects = solution.Projects;
             foreach (Project project in projects)
             {
-                foreach (string file in ProcessProjectForRazorFiles(project))
+                foreach (string fileName in ProcessProjectForRazorFiles(project))
                 {
-                    yield return file;
+                    var componentName = Path.GetFileNameWithoutExtension(fileName);
+                    componentNames.Add(componentName);
+                    yield return fileName;
                 }
             }
+            ComponentNameProvider.SetComponentNames(componentNames);
         }
 
         private static IEnumerable<string> ProcessProjectForRazorFiles(Project project)

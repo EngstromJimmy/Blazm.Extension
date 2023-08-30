@@ -6,8 +6,8 @@ using System.IO;
 
 namespace BlazmExtension
 {
-    [Command(PackageIds.FindComponentReferences)]
-    internal sealed class FindComponentReferencesCommand : BaseCommand<FindComponentReferencesCommand>
+    [Command(PackageIds.FindComponentUsages)]
+    internal sealed class FindComponentUsagesCommand : BaseCommand<FindComponentUsagesCommand>
     {
         protected override Task InitializeCompletedAsync()
         {
@@ -15,7 +15,7 @@ namespace BlazmExtension
             return base.InitializeCompletedAsync();
         }
 
-        public static FindComponentReferencesCommand Instance { get; private set; }
+        public static FindComponentUsagesCommand Instance { get; private set; }
 
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
