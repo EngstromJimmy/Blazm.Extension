@@ -8,7 +8,9 @@
              xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
              xmlns:componentReferences="clr-namespace:BlazmExtension.Dialogs.ComponentReferences"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             FocusManager.FocusedElement="{Binding ElementName=PlaceholderTextBlock}"
+             MouseDown="UserControl_MouseDown">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -63,16 +65,70 @@
                 <Setter Property="Background" Value="{DynamicResource {x:Static vsShell:VsBrushes.ToolWindowBackgroundKey}}"/>
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static vsShell:VsBrushes.ToolWindowTextKey}}"/>
             </Style>
+
+            <Style x:Key="SearchTextBoxStyle" TargetType="TextBox">
+                <Setter Property="Background" Value="{DynamicResource {x:Static vsShell:VsBrushes.ToolWindowBackgroundKey}}"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static vsShell:VsBrushes.ToolWindowTextKey}}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource {x:Static vsShell:VsBrushes.ToolWindowBorderKey}}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="Height" Value="28"/>
+                <Setter Property="FontSize" Value="14"/>
+            </Style>
+
+            <!-- Style for Search Button -->
+            <Style x:Key="SearchButtonStyle" TargetType="Button">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background" Value="#007ACC"/>
+                <!-- VS Blue -->
+                <Setter Property="Height" Value="28"/>
+                <Setter Property="Width" Value="80"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="Margin" Value="10,0,0,0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="4">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
 
 
     </UserControl.Resources>
-    <Grid>
+    <Grid PreviewMouseDown="Grid_PreviewMouseDown" >
         <!-- Search and Refresh UI -->
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
+        <!-- Search TextBox and Button -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+            <Grid>
+                <TextBox x:Name="ComponentSearchTextBox" 
+                         Width="300" 
+                         Style="{StaticResource SearchTextBoxStyle}"
+                         GotFocus="ComponentSearchTextBox_GotFocus"
+                         LostFocus="ComponentSearchTextBox_LostFocus"
+                         TextChanged="ComponentSearchTextBox_TextChanged"
+                         PreviewKeyDown="ComponentSearchTextBox_PreviewKeyDown" />
+                <TextBlock x:Name="PlaceholderTextBlock" 
+                           IsHitTestVisible="False" 
+                           Text="Enter component name..." 
+                           Foreground="Gray" 
+                           VerticalAlignment="Center" 
+                           Padding="5,0" 
+                           Visibility="Visible" />
+            </Grid>
+            <Button Content="Search" 
+                    Style="{StaticResource SearchButtonStyle}" 
+                    Click="OnSearchButtonClick" />
+        </StackPanel>
 
         <!-- Container for the text -->
         <Border Background="{DynamicResource {x:Static vsShell:VsBrushes.ToolWindowBackgroundKey}}"
@@ -80,7 +136,7 @@
                 BorderThickness="1" 
                 Margin="10" 
                 Padding="5" 
-                Grid.Row="0">
+                Grid.Row="1">
             <TextBlock x:Name="ReferenceTextBlock" 
                        Foreground="{DynamicResource {x:Static vsShell:VsBrushes.ToolWindowTextKey}}" 
                        FontWeight="Bold" 
@@ -94,7 +150,7 @@
                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   MouseDoubleClick="ComponentReferenceGrid_MouseDoubleClick"
-                  Grid.Row="1">
+                  Grid.Row="2">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Preview}" Header="Preview" Width="*" IsReadOnly="True"/>
                 <DataGridTextColumn Binding="{Binding FileName}" Header="File Name" Width="*" IsReadOnly="True"/>
