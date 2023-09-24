@@ -7,7 +7,7 @@ So I looked at some of my pain points and how I could solve them with an extensi
 ## Features when right-clicking a component in the solution explorer
 When you right-click on a component in the Solution Explorer, you will see a new context menu with the following items:
 
-<img src="https://github.com/EngstromJimmy/Blazm.Extension/blob/main/Images/SolutionRazorContext.png?raw=true" width="400">
+<img src="https://github.com/biegehydra/Blazm.Extension/blob/main/Images/SolutionRazorContext.png?raw=true" width="400">
 
 ### Creating a new Isolated CSS file
 I wanted to be able to create a new Isolated CSS file directly from the Solution Explorer, and I didn't want to have to type the name of the file.  
@@ -25,11 +25,15 @@ This feature will add a code-behind file directly from the Solution Explorer.
 Just right-click on the component and select "Create Codebehind".  
 This will create a new code-behind file with the same name as the component.  
 
+### Find component usages (Solution Explorer)
+Clicking this will search your entire solution for usages of the selected component. 
+
+See [Find component usages (Window)](#find-component-usages-window)
 
 ## Features when right-clicking when selecting code in a Razor file.
 When you select code and right-click in a component, you will see a new context menu with the following items:
 
-<img src="https://github.com/EngstromJimmy/Blazm.Extension/blob/main/Images/RazorMenuContext.png?raw=true" width="400">
+<img src="https://github.com/biegehydra/Blazm.Extension/blob/main/Images/RazorMenuContext.png?raw=true" width="400">
 
 
 ### Move namespaces to _Imports
@@ -41,6 +45,17 @@ Blazor is a very component-based framework, and you often find yourself extracti
 This task is very common, and I wanted to make it as easy as possible.
 Simply select the code you want to extract and right-click and select "Extract to Component".
 This will create a new component with the selected code and replace the selected code with the new component.
+
+### Find component usages (Right click in razor file)
+The behaviour of this dependends on the cursor position when you right click. If you are anywhere
+within an opening, closing, or self-enclosing tag. It will open the component usages window and search for that component.
+(Note: Works for standard html elements as well)
+
+If you are not in an opening, closing, or self-enclosing tag - be it an empty line, csharp code space, or the body of a component - 
+it will search for the razor component of the file you are in. For example, if you are in NavMenu.razor and right click in an 
+`@code` block, it will search for `NavMenu` usages.
+
+See [Find component usages (Window)](#find-component-usages-window)
 
 ## Features when right-clicking a code-behind file of a Razor component.
 When you right-click on a component's codebehind file in the Solution Explorer you will see a new context menu with the following items:
@@ -118,6 +133,12 @@ This generator is designed to seamlessly incorporate dependency injected propert
 There's an ongoing challenge with line break placements, but I'm optimistic about finding a resolution. To leverage this feature, simply right-click on a component and choose the desired command.
 
 <img src="https://github.com/EngstromJimmy/Blazm.Extension/blob/main/Images/bUnit.png?raw=true" width="400">
+
+### Find component usages (Window)
+The find component usages feature opens up a window that shows you the file name, file path, line number, and a preview, of all usages for a particular razor component in your solution. In
+this window there is also a search box to let you input a different component to find - this search box has auto complete but only for components in your solution. 
+
+<img src="https://github.com/biegehydra/Blazm.Extension/blob/main/Images/ComponentUsagesExample.png?raw=true" width="400">
 
 ## Conclusion
 I hope you find this extension useful.
