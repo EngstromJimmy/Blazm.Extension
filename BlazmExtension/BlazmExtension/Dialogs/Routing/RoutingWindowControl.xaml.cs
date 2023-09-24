@@ -16,7 +16,7 @@ using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using BlazmExtension.ExtensionMethods;
+using BlazmExtension.Extensions;
 
 namespace BlazmExtension.Dialogs.Routing;
 

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using BlazmExtension.ExtensionMethods;
+using BlazmExtension.Extensions;
 using Path = System.IO.Path;
 using TextSelection = EnvDTE.TextSelection;
 using System.Text.RegularExpressions;
