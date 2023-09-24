@@ -5,8 +5,11 @@ namespace BlazmExtension.Tests
     [TestClass]
     public class ExtensionTests
     {
+        [DataRow(null, 0, null)]
+        [DataRow("", 0, null)] 
+        [DataRow(" ", 0, null)]
         [DataRow("<p></p><em></em>", 16, null)] // very end of string
-        [DataRow("<p></p><em></em>", 15, "em")] // very end of string
+        [DataRow("<p></p><em></em>", 15, "em")]
         [DataRow("<p></p><em></em>", 14, "em")]
         [DataRow("<p></p><em></em>", 13, "em")]
         [DataRow("<p></p><em></em>", 12, "em")] 

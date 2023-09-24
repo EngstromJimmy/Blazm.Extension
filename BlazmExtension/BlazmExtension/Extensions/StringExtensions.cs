@@ -6,6 +6,11 @@ namespace BlazmExtension.Extensions
     {
         public static string GetComponentNameOnCursor(this string lineText, int cursorPosition)
         {
+            if (string.IsNullOrWhiteSpace(lineText))
+            {
+                return null;
+            }
+
             int initialCursorPos = cursorPosition;
 
             string componentName = null;
