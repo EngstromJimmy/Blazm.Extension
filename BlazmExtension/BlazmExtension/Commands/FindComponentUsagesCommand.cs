@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using System.Text.RegularExpressions;
 using BlazmExtension.Dialogs.ComponentReferences;
 using System.IO;
+using System.Text;
 
 namespace BlazmExtension
 {
@@ -21,19 +22,51 @@ namespace BlazmExtension
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
-            // Get the current document and caret position
             var dte = (DTE)ServiceProvider.GlobalProvider.GetService(typeof(DTE));
 
-
+            // Get the current document and caret position
             var activeDocument = dte.ActiveDocument;
             var textSelection = (TextSelection)activeDocument.Selection;
             var point = textSelection.ActivePoint;
             var lineText = point.CreateEditPoint().GetLines(point.Line, point.Line + 1);
+            int cursorPos = point.DisplayColumn - 1; // Convert to 0-based indexing
+            int initialCursorPos = cursorPos;
 
-            // Use regex to get the component name
-            var componentNameRegex = new Regex(@"<(\w+)(?:\s*[^>]*?/?>|>)");
-            var match = componentNameRegex.Match(lineText); // Searching backwards from the caret
-            var componentName = match.Groups[1].Value;
+            string componentName = null;
+
+            // 1. Start from the cursor position and move to the right until we find a closing tag
+            while (cursorPos < lineText.Length && lineText[cursorPos] != '<' && lineText[cursorPos] != '>')
+            {
+                cursorPos++;
+            }
+
+            if (cursorPos < lineText.Length && lineText[cursorPos] == '>')
+            {
+                // 2. Ok, the input has a closing tag to the right, lets go back to the original cursor position
+                // and move to the left to see if we can find an opening tag
+                cursorPos = initialCursorPos;
+                while (cursorPos >= 0 && lineText[cursorPos] != '<' && (lineText[cursorPos] != '>' || cursorPos == initialCursorPos))
+                {
+                    cursorPos--;
+                }
+
+                if (cursorPos >= 0 && lineText[cursorPos] == '<')
+                {
+                    // Ok, we found an opening tag, lets move to the right and capture the component name
+                    // NOTE: This could be an opening, closing or self-closing tag. It works the same
+                    var sb = new StringBuilder();
+                    while (cursorPos < lineText.Length && lineText[cursorPos] != ' ' && lineText[cursorPos] != '>' && lineText[cursorPos] != '\n')
+                    {
+                        if (lineText[cursorPos] != '<' && lineText[cursorPos] != '/')
+                        {
+                            sb.Append(lineText[cursorPos]);
+                        }
+                        cursorPos++;
+                    }
+                    componentName = sb.ToString();
+                }
+            }
+
 
             if (string.IsNullOrEmpty(componentName))
             {
