@@ -69,7 +69,8 @@
     <Compile Include="Dialogs\Routing\RoutingWindowControl.xaml.cs">
       <DependentUpon>RoutingWindowControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ExtensionMethods\EnvDteExtensionMethods.cs" />
+    <Compile Include="Extensions\EnvDteExtensionMethods.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeDefinitionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\CreateIsolatedCssCommand.cs" />

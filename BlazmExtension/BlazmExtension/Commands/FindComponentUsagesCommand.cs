@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using BlazmExtension.Dialogs.ComponentReferences;
 using System.IO;
 using System.Text;
+using BlazmExtension.Extensions;
 
 namespace BlazmExtension
 {
@@ -30,42 +31,7 @@ namespace BlazmExtension
             var point = textSelection.ActivePoint;
             var lineText = point.CreateEditPoint().GetLines(point.Line, point.Line + 1);
             int cursorPos = point.DisplayColumn - 1; // Convert to 0-based indexing
-            int initialCursorPos = cursorPos;
-
-            string componentName = null;
-
-            // 1. Start from the cursor position and move to the right until we find a closing tag
-            while (cursorPos < lineText.Length && lineText[cursorPos] != '<' && lineText[cursorPos] != '>')
-            {
-                cursorPos++;
-            }
-
-            if (cursorPos < lineText.Length && lineText[cursorPos] == '>')
-            {
-                // 2. Ok, the input has a closing tag to the right, lets go back to the original cursor position
-                // and move to the left to see if we can find an opening tag
-                cursorPos = initialCursorPos;
-                while (cursorPos >= 0 && lineText[cursorPos] != '<' && (lineText[cursorPos] != '>' || cursorPos == initialCursorPos))
-                {
-                    cursorPos--;
-                }
-
-                if (cursorPos >= 0 && lineText[cursorPos] == '<')
-                {
-                    // Ok, we found an opening tag, lets move to the right and capture the component name
-                    // NOTE: This could be an opening, closing or self-closing tag. It works the same
-                    var sb = new StringBuilder();
-                    while (cursorPos < lineText.Length && lineText[cursorPos] != ' ' && lineText[cursorPos] != '>' && lineText[cursorPos] != '\n')
-                    {
-                        if (lineText[cursorPos] != '<' && lineText[cursorPos] != '/')
-                        {
-                            sb.Append(lineText[cursorPos]);
-                        }
-                        cursorPos++;
-                    }
-                    componentName = sb.ToString();
-                }
-            }
+            var componentName = lineText.GetComponentNameOnCursor(cursorPos);
 
 
             if (string.IsNullOrEmpty(componentName))

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33513.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazmExtension", "BlazmExtension\BlazmExtension.csproj", "{A11ACA63-2F3C-4EAB-802B-6CBDA22E3664}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazmExtension.Tests", "BlazmExtension.Tests\BlazmExtension.Tests.csproj", "{20AE9FEC-3E7C-4FE5-AC8A-10FFBA935246}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{A11ACA63-2F3C-4EAB-802B-6CBDA22E3664}.Release|arm64.Build.0 = Release|arm64
 		{A11ACA63-2F3C-4EAB-802B-6CBDA22E3664}.Release|x86.ActiveCfg = Release|x86
 		{A11ACA63-2F3C-4EAB-802B-6CBDA22E3664}.Release|x86.Build.0 = Release|x86
+		{20AE9FEC-3E7C-4FE5-AC8A-10FFBA935246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20AE9FEC-3E7C-4FE5-AC8A-10FFBA935246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20AE9FEC-3E7C-4FE5-AC8A-10FFBA935246}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{20AE9FEC-3E7C-4FE5-AC8A-10FFBA935246}.Debug|arm64.Build.0 = Debug|Any CPU
+		{20AE9FEC-3E7C-4FE5-AC8A-10FFBA935246}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{20AE9FEC-3E7C-4FE5-AC8A-10FFBA935246}.Debug|x86.Build.0 = Debug|Any CPU
+		{20AE9FEC-3E7C-4FE5-AC8A-10FFBA935246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20AE9FEC-3E7C-4FE5-AC8A-10FFBA935246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20AE9FEC-3E7C-4FE5-AC8A-10FFBA935246}.Release|arm64.ActiveCfg = Release|Any CPU
+		{20AE9FEC-3E7C-4FE5-AC8A-10FFBA935246}.Release|arm64.Build.0 = Release|Any CPU
+		{20AE9FEC-3E7C-4FE5-AC8A-10FFBA935246}.Release|x86.ActiveCfg = Release|Any CPU
+		{20AE9FEC-3E7C-4FE5-AC8A-10FFBA935246}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
