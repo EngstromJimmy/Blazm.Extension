@@ -3,6 +3,8 @@ using Microsoft.VisualStudio.Shell.Interop;
 using System.Text.RegularExpressions;
 using BlazmExtension.Dialogs.ComponentReferences;
 using System.IO;
+using System.Text;
+using BlazmExtension.Extensions;
 
 namespace BlazmExtension
 {
@@ -21,19 +23,16 @@ namespace BlazmExtension
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
-            // Get the current document and caret position
             var dte = (DTE)ServiceProvider.GlobalProvider.GetService(typeof(DTE));
 
-
+            // Get the current document and caret position
             var activeDocument = dte.ActiveDocument;
             var textSelection = (TextSelection)activeDocument.Selection;
             var point = textSelection.ActivePoint;
             var lineText = point.CreateEditPoint().GetLines(point.Line, point.Line + 1);
+            int cursorPos = point.DisplayColumn - 1; // Convert to 0-based indexing
+            var componentName = lineText.GetComponentNameOnCursor(cursorPos);
 
-            // Use regex to get the component name
-            var componentNameRegex = new Regex(@"<(\w+)(?:\s*[^>]*?/?>|>)");
-            var match = componentNameRegex.Match(lineText); // Searching backwards from the caret
-            var componentName = match.Groups[1].Value;
 
             if (string.IsNullOrEmpty(componentName))
             {

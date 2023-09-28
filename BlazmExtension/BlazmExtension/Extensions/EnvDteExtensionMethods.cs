@@ -4,7 +4,7 @@ using System.IO;
 using BlazmExtension.Singletons;
 using Project = EnvDTE.Project;
 
-namespace BlazmExtension.ExtensionMethods
+namespace BlazmExtension.Extensions
 {
     public static class EnvDteExtensionMethods
     {
