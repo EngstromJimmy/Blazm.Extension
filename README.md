@@ -138,7 +138,7 @@ There's an ongoing challenge with line break placements, but I'm optimistic abou
 The find component usages feature opens up a window that shows you the file name, file path, line number, and a preview, of all usages for a particular razor component in your solution. In
 this window there is also a search box to let you input a different component to find - this search box has auto complete but only for components in your solution. 
 
-<img src="https://github.com/biegehydra/Blazm.Extension/blob/main/Images/ComponentUsagesExample.png?raw=true" width="400">
+<img src="https://github.com/engstromjimmy/Blazm.Extension/blob/main/Images/ComponentUsagesExample.png?raw=true" width="400">
 
 ## Conclusion
 I hope you find this extension useful.
