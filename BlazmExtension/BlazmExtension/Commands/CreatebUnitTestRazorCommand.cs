@@ -1,4 +1,5 @@
 ﻿using BlazmExtension.Extensions;
+using Community.VisualStudio.Toolkit;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.ServiceHub.Framework.Services;
@@ -32,7 +33,7 @@ namespace BlazmExtension
             UIHierarchy uih = (UIHierarchy)dte.Windows.Item(EnvDTE.Constants.vsWindowKindSolutionExplorer).Object;
             Array selectedItems = (Array)uih.SelectedItems;
 
-            var items = GetAllRazorComponentsFromAssembly(dte.Solution);
+            var items = ProjectHelpers.GetAllRazorComponentsFromAssembly(dte.Solution);
             foreach (UIHierarchyItem selItem in selectedItems)
             {
                 ProjectItem prjItem = selItem.Object as ProjectItem;
@@ -58,9 +59,6 @@ namespace BlazmExtension
         }
 
 
-
-  
-
         public string GenerateTest(TypeDefinition type)
         {
             var sb = new StringBuilder();
@@ -71,7 +69,7 @@ namespace BlazmExtension
             sb.AppendLine($"@code");
             sb.AppendLine("    {");
             sb.AppendLine($"        [Fact]");
-            sb.AppendLine($"        public void Test1()");
+            sb.AppendLine($"        public void {type.Name}Test()");
             sb.AppendLine("        {");
             sb.AppendLine($"            //Arrange");
             sb.AppendLine(type.GetInjectDeclarations());
@@ -115,85 +113,6 @@ namespace BlazmExtension
             sb.AppendLine("    }");
 
             return sb.ToString();
-        }
-
-        public class ComponentItem
-        {
-            public string Name { get; set; }
-            public string FullName { get; set; }
-            public string Path { get; set; }
-            public TypeDefinition TypeDefinition { get; set; }
-        }
-
-        public static List<ComponentItem> GetAllRazorComponentsFromAssembly(EnvDTE.Solution solution)
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            List<ComponentItem> items = new List<ComponentItem>();
-            Projects projects = solution.Projects;
-            foreach (EnvDTE.Project project in projects)
-            {
-
-                var activeProject = project;
-                string outputDir = activeProject?.ConfigurationManager?.ActiveConfiguration?.Properties?.Item("OutputPath")?.Value?.ToString() ?? "";
-                string outputFileName = activeProject?.Properties?.Item("OutputFileName")?.Value?.ToString() ?? "";
-                string projectDir = activeProject?.Properties?.Item("FullPath")?.Value?.ToString() ?? "";
-
-                string fullPath = Path.Combine(projectDir, outputDir, outputFileName);
-
-                if (File.Exists(fullPath))
-                {
-                    var readerParameters = new ReaderParameters { ReadSymbols = true };
-                    using (var ass = Mono.Cecil.AssemblyDefinition.ReadAssembly(fullPath, readerParameters))
-                    {
-                        var types = ass.MainModule
-                        .Types
-                        .Where(_ => _.BaseType != null && _.BaseType.FullName == "Microsoft.AspNetCore.Components.ComponentBase");
-
-                        foreach (var t in types)
-                        {
-                            var m = t.Methods.FirstOrDefault(_ => _.DebugInformation.HasSequencePoints);
-                            var a = t.CustomAttributes.Where(_ => _.AttributeType.Name == "RouteAttribute");
-
-                            string sourceFile = "";
-                            //Find the line source file and line number
-                            if (m != null)
-                            {
-                                var line = m.DebugInformation.SequencePoints.FirstOrDefault();
-                                if (line != null)
-                                {
-                                    //If the source file is a cs file, see if there is a .razor file.
-                                    //If so, use that instead
-                                    if (line.Document.Url.EndsWith(".razor.cs"))
-                                    {
-                                        var razorFile = line.Document.Url.TrimEnd(".cs".ToCharArray());
-                                        if (File.Exists(razorFile))
-                                        {
-                                            sourceFile = razorFile;
-                                        }
-                                        else
-                                        {
-                                            sourceFile = line.Document.Url;
-                                        }
-                                    }
-                                    else
-                                    {
-                                        sourceFile = line.Document.Url;
-                                    }
-                                }
-                            }
-
-                            var item = new ComponentItem();
-
-                            item.Name = t.Name;
-                            item.TypeDefinition = t;
-                            item.FullName = t.FullName;
-                            item.Path = sourceFile;
-                            items.Add(item);
-                        }
-                    }
-                }
-            }
-            return items;
         }
     }
 }

@@ -8,6 +8,10 @@ namespace BlazmExtension.Extensions
 {
     public static class EnvDteExtensionMethods
     {
+
+
+
+
         public static IEnumerable<string> GetAllRazorFiles(this EnvDTE.Solution solution)
         {
             if (solution == null)

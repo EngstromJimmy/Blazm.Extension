@@ -70,6 +70,7 @@
       <DependentUpon>RoutingWindowControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\EnvDteExtensionMethods.cs" />
+    <Compile Include="Extensions\ProjectHelpers.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeDefinitionExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
