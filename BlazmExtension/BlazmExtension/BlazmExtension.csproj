@@ -50,6 +50,8 @@
     <Compile Include="Commands\CreatebUnitTestRazorCommand.cs" />
     <Compile Include="Commands\CreateCodebehindCommand.cs" />
     <Compile Include="Commands\CreatebUnitTestCsCommand.cs" />
+    <Compile Include="Commands\RunDotnetWatchCommand.cs" />
+    <Compile Include="Commands\QuickSaveCommand.cs" />
     <Compile Include="Commands\SwitchToNestedFile.cs" />
     <Compile Include="Commands\RoutingWindowCommand.cs" />
     <Compile Include="Commands\MoveCodebehindToRazor.cs" />

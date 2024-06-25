@@ -23,7 +23,10 @@
 			<Group guid="BlazmExtension" id="CreatebUnitTestSubMenuGroup" priority="0x0700">
 				<Parent guid="BlazmExtension" id="CreatebUnitTestSubMenu" />
 			</Group>
-
+      
+      <Group guid="BlazmExtension" id="ContextMenuGroup" priority="0x0001">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
+      </Group>
 		</Groups>
 
 		<Bitmaps>
@@ -38,12 +41,10 @@
 			<!-- Routes Window -->
 			<Button guid="BlazmExtension" id="RoutingWindow" priority="0x0100" type="Button">
 				<Parent guid="BlazmExtension" id="BlazmExtensionMenuGroup"/>
-				<!--<Icon guid="guidImages" id="bmpPic1" />-->
 				<Strings>
 					<ButtonText>Show Blazor Routes</ButtonText>
 				</Strings>
 			</Button>
-
 
 			<Button guid="BlazmExtension" id="SwitchToNestedFile" priority="0x0200" type="Button">
 				<Parent guid="BlazmExtension" id="BlazmExtensionMenuGroup"/>
@@ -51,8 +52,25 @@
 					<ButtonText>Switch to Nested File</ButtonText>
 				</Strings>
 			</Button>
-			
-			<Button guid="BlazmExtension" id="MoveNamespace" priority="0x0100" type="Button">
+
+      <Button guid="BlazmExtension" id="QuickSave" priority="0x0300" type="Button">
+        <Parent guid="BlazmExtension" id="BlazmExtensionMenuGroup"/>
+        <Strings>
+          <ButtonText>Quick Save</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="BlazmExtension" id="RunDotnetWatch" priority="0x0001" type="Button">
+        <Parent guid="BlazmExtension" id="ContextMenuGroup"/>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Run Dotnet watch</ButtonText>
+        </Strings>
+      </Button>
+
+
+
+      <Button guid="BlazmExtension" id="MoveNamespace" priority="0x0100" type="Button">
 				<Parent guid="BlazmExtension" id="RazorFileMenu" />
 				<Icon guid="RazorIcons" id="razorIcon" />
 				<CommandFlag>DynamicVisibility</CommandFlag>
@@ -191,11 +209,14 @@
 			<IDSymbol name="SwitchToNestedFile" value="0x0700" />
 			<IDSymbol name="FindComponentUsages" value="0x0800" />
 			<IDSymbol name="FindComponentUsagesSE" value="0x0900" />
-			
 			<IDSymbol name="CreatebUnitTestGroup" value="0x0800" />
 			<IDSymbol name="BlazmExtensionMenuGroup" value="0x1020" />
 			<IDSymbol name="BlazmExtensionMenu" value="0x1021" />
 			<IDSymbol name="CreatebUnitTestSubMenuGroup" value="0x1022" />
+      <IDSymbol name="QuickSave" value="0x1023" />
+      <IDSymbol name="RunDotnetWatch" value="0x1024" />
+      
+      <IDSymbol name="ContextMenuGroup" value="0x2000" />
 		</GuidSymbol>
 		<GuidSymbol name="RazorContextGuid" value="{ba1aa6e4-68f5-4a4f-97c0-cbf91710430e}"/>
 		<GuidSymbol name="RazorCsContextGuid" value="{8f08cd3a-1f0b-4114-8a32-b148e8505468}"/>

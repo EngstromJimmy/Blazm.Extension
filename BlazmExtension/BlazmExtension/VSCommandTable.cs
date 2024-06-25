@@ -64,5 +64,7 @@ namespace BlazmExtension
         public const int csIcon = 0x0001;
         public const int FindComponentUsages = 0x0800;
         public const int FindComponentUsagesSE = 0x0900;
+        public const int QuickSave = 0x1023;
+        public const int RunDotnetWatch = 0x1024;
     }
 }

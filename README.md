@@ -83,6 +83,16 @@ The window will show all the routes in your project, and you can double-click on
 
 <img src="https://github.com/EngstromJimmy/Blazm.Extension/blob/main/Images/Routes.png?raw=true" width="400">
 
+### Quick save
+This is an experimental feature that I'm testing.
+I noticed that using Hot Reload from Notepad was alot faster that using it from Visual Studio. I am not sure if it is related but Visual Studio saves the file as a temporary file, deletes the original and renames the temp file. My theory is that this is why Hot Reload is slower in Visual Studio.
+So I created a new feature called Quick Save. This feature will save the file without creating a temp file.
+There is probably a very good reaon why Visual Studio saves the file as a temp file, so take into consideration that this feature is experimental.
+
+### Run dotnet watch
+While creating my Blazor course on Dometrain (shameless plug), I noticed that Hot Reload running from PowerShell (dotnet watch) worked better than from Visual Studio, it is also quite nice to have it running in the background. I prefer not to have to write things in powershell or the console in general. So I added "Run dotnet watch" menu item for projects.
+So now we can just right-click on the project and select "Run dotnet watch" and it will start dotnet watch in a PowerShell window.
+
 ### bUnit test generation
 Think writing tests is tedious? Well, this new feature promises to eliminate much of that monotony, letting us zero in on the exciting parts!
 Currently, this feature is still undergoing refinement and is in its beta phase. Your feedback and suggestions would be invaluable as we refine this tool.
