@@ -75,7 +75,7 @@
 				<Icon guid="RazorIcons" id="razorIcon" />
 				<CommandFlag>DynamicVisibility</CommandFlag>
 				<Strings>
-					<ButtonText>Move namespace(s) to _Import</ButtonText>
+					<ButtonText>Move namespace(s) to _Imports</ButtonText>
 					<LocCanonicalName>.BlazmExtension.MoveNamespace</LocCanonicalName>
 				</Strings>
 			</Button>
