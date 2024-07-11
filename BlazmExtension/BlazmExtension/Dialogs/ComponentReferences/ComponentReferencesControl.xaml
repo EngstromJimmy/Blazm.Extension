@@ -49,7 +49,7 @@
 
             <!-- Style for the DataGrid cells -->
             <Style TargetType="DataGridCell">
-                <Setter Property="Background" Value="{DynamicResource {x:Static vsShell:VsBrushes.BackgroundKey}}"/>
+                <Setter Property="Background" Value="{DynamicResource {x:Static vsShell:VsBrushes.WindowKey}}"/>
                 <Setter Property="BorderBrush" Value="Transparent"/>
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static vsShell:VsBrushes.ToolWindowTextKey}}"/>
             </Style>
